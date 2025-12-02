@@ -19,23 +19,16 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased text-white min-h-screen" x-data="{ dirty: false }">
-
-    <!-- =========== VIDEO DE FONDO =========== -->
-    <video autoplay muted loop playsinline
-        class="fixed top-0 left-0 w-full h-full object-cover -z-20">
-        <source src="{{ asset('image/fondo_animado.webm') }}" type="video/webm">
-        <!-- fallback -->
-    </video>
+<body class="font-sans antialiased text-white min-h-screen relative" x-data="{ dirty: false }"
+      style="background: radial-gradient(circle at center, #9810FA, #8A0194, #1a1f4c);">
 
     <!-- =========== LÁMINA SUAVE =========== -->
     <div class="fixed inset-0 bg-black/30 backdrop-blur-[1px] -z-10"></div>
 
-    <!-- =========== NAVBAR INTERNO SIGA (mantiene funcionalidad previa) =========== -->
+    <!-- =========== NAVBAR INTERNO SIGA =========== -->
     <header
         class="backdrop-blur-lg bg-black/30 fixed w-full top-0 z-50 h-16 flex items-center justify-between px-4 border-b border-white/10">
-
-        <!-- IZQUIERDA: Botón Atrás (manteniendo tu lógica de dirty) -->
+        <!-- Botón Atrás -->
         <div class="flex-shrink-0 w-28">
             <button type="button"
                 @click="
@@ -56,14 +49,14 @@
             </button>
         </div>
 
-        <!-- CENTRO: SIGA – UTN -->
+        <!-- Título -->
         <div class="flex-grow text-center">
             <h1 class="text-2xl font-semibold drop-shadow-md">
                 SIGA – UTN
             </h1>
         </div>
 
-        <!-- DERECHA: Menú de Usuario (mantiene foto, nombre y dropdown) -->
+        <!-- Menú Usuario -->
         <div class="flex-shrink-0 flex items-center gap-3">
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open"
@@ -100,7 +93,6 @@
 
     <!-- =========== CONTENIDO PRINCIPAL =========== -->
     <main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <!-- Mensajes flash (manteniendo lo que ya tenías) -->
         @if(session('success'))
             <div class="mb-4 bg-green-100/80 border border-green-400 text-green-900 px-4 py-3 rounded relative">
                 {{ session('success') }}
@@ -112,7 +104,6 @@
             </div>
         @endif
 
-        {{-- SLOT: aquí se renderiza el contenido de cada vista (panel, forms, etc.) --}}
         {{ $slot }}
     </main>
 

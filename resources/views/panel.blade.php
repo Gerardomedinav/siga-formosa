@@ -1,11 +1,5 @@
 {{-- resources/views/panel.blade.php --}}
 <x-app-interno-layout>
-
-    {{-- VIDEO DE FONDO --}}
-    <video autoplay loop muted playsinline class="fixed inset-0 w-full h-full object-cover -z-10">
-        <source src="{{ asset('image/fondo_animado.webm') }}" type="video/webm">
-    </video>
-
     {{-- CONTENIDO DEL PANEL --}}
     <div class="space-y-6 relative z-10">
 

@@ -70,26 +70,25 @@
 
 
     <!-- ================= BANNER ================= -->
-    <section id="home" class="pt-32 pb-24 text-center">
-        <div class="max-w-7xl mx-auto px-6">
-            <h1 class="text-5xl md:text-6xl font-bold drop-shadow-lg">
-                Bienvenido al SIGA
-            </h1>
-           <div class="w-full flex justify-center items-center mt-10">
-    <img src="{{ asset('img/siga_logo.png') }}" 
-         alt="Logo SIGA"
-         class="h-40 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
-</div>
-
-            <p class="mt-4 text-lg md:text-xl drop-shadow-md opacity-90">
-                Sistema Integral de Gestión Académica – UTN Formosa
-            </p>
+<section id="home" class="pt-28 pb-16 text-center">
+    <div class="max-w-7xl mx-auto px-6">
+        <h1 class="text-5xl md:text-6xl font-bold drop-shadow-lg">
+            Bienvenido al SIGA
+        </h1>
+        <div class="w-full flex justify-center items-center mt-10">
+            <img src="{{ asset('img/siga_logo.png') }}" 
+                 alt="Logo SIGA"
+                 class="h-40 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
         </div>
-    </section>
 
+        <p class="mt-4 text-lg md:text-xl drop-shadow-md opacity-90">
+            Sistema Integral de Gestión Académica – UTN Formosa
+        </p>
+    </div>
+</section>
 
-    <!-- ================= SECCIÓN INGRESO ================= -->
-  <section id="ingreso" class="py-24">
+<!-- ================= SECCIÓN INGRESO ================= -->
+<section id="ingreso" class="pt-2 pb-10">
     <div class="max-w-5xl mx-auto px-6 text-center">
         <h2 class="text-4xl font-bold drop-shadow-lg mb-6">Ingreso al Sistema</h2>
 
@@ -98,27 +97,22 @@
         </p>
 
         <div class="flex justify-center gap-6">
-
             @if (Route::has('login'))
                 @auth
-                    <!-- Si el usuario YA está logueado -->
                     <a href="{{ url('/dashboard') }}"
                        class="px-8 py-3 bg-green-600/80 hover:bg-green-700 rounded-lg font-semibold shadow-lg backdrop-blur-sm">
                         Ir al Panel
                     </a>
                 @else
-                    <!-- Si NO está logueado -->
                     <a href="{{ route('login') }}"
                        class="px-8 py-3 bg-blue-600/80 hover:bg-blue-700 rounded-lg font-semibold shadow-lg backdrop-blur-sm">
                         Iniciar Sesión
                     </a>
                 @endauth
             @endif
-
         </div>
     </div>
 </section>
-
 
 
    <!-- ================= CONTACTO ================= -->

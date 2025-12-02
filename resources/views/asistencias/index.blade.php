@@ -25,4 +25,11 @@
             <p class="mt-2 text-sm text-gray-100">Gestionar alumnos por comisión.</p>
         </a>
     </div>
+
+      <!-- Botón de cierre/cancelar -->
+<div class="flex justify-center mt-6">
+    <a href="{{ route('panel') }}"
+       class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+        Volver al Panel
+    </a>
 </x-app-interno-layout>

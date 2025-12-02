@@ -30,7 +30,7 @@
 <div class="flex justify-center mt-6">
     <a href="{{ route('panel') }}"
        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
-        Cerrar
+        Volver al Panel
     </a>
 </div>
 </x-app-interno-layout>
