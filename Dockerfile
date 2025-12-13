@@ -1,7 +1,7 @@
-# --- Dockerfile Optimizado para Render (SIGA - UTN) ---
+# --- Dockerfile Definitivo para Render ---
 FROM php:8.3-fpm-alpine
 
-# 1. Instalar dependencias del sistema y extensiones de PHP necesarias
+# 1. Instalar dependencias
 RUN apk update && apk add --no-cache \
     git \
     openssl \
@@ -14,66 +14,61 @@ RUN apk update && apk add --no-cache \
     && docker-php-ext-install pdo_pgsql opcache pcntl exif \
     && rm -rf /var/cache/apk/*
 
-# 2. Instalar Composer globalmente
+# 2. Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# 3. Establecer directorio de trabajo
+# 3. Directorio de trabajo
 WORKDIR /var/www
 
-# 4. Copiar los archivos del proyecto al contenedor
+# 4. Copiar archivos
 COPY . .
 
-# 5. Instalar dependencias de PHP (Composer)
-# Nota: Ignoramos dependencias de desarrollo y optimizamos el autoloader
+# 5. Instalar dependencias
 RUN composer install --prefer-dist --no-dev --optimize-autoloader
-
-# 6. Instalar dependencias de Node y compilar assets (Vite)
 RUN npm install
 RUN npm run build
 
-# --- NOTA IMPORTANTE ---
-# Hemos eliminado 'cp .env.example .env' y 'key:generate' 
-# para que Laravel use las variables que configuraste en el panel de Render.
-# -----------------------
+# 6. Configuración inicial (.env y key)
+RUN cp .env.example .env
+RUN php artisan key:generate
 
-# 7. Configurar permisos para carpetas de almacenamiento y caché
+# 7. Permisos
 RUN chown -R www-data:www-data /var/www/storage \
     && chmod -R 775 /var/www/storage
 
-# 8. Exponer el puerto que usará php artisan serve
+# 8. Exponer puerto
 EXPOSE 8000
 
 # -----------------------------------------------------------
-# 9. SCRIPT DE INICIO (Ejecutado al arrancar el contenedor)
+# 9. SCRIPT DE INICIO (Modificado para Storage Link y Optimize Clear)
 # -----------------------------------------------------------
 RUN printf "#!/bin/sh\n\
 set -e\n\
 \n\
-echo '🚀 Iniciando limpieza y preparación...'\n\
-php artisan config:clear\n\
-php artisan cache:clear\n\
+echo '🚀 Iniciando contenedor...'\n\
 \n\
-echo '🔗 Creando enlace simbólico de almacenamiento...'\n\
-php artisan storage:link --force\n\
+echo '🧹 Limpiando caché total (Optimize Clear)...'\n\
+php artisan optimize:clear\n\
 \n\
-echo '📦 Sincronizando Base de Datos PostgreSQL...'\n\
-# --force es obligatorio en producción\n\
+echo '🔗 Creando enlace simbólico de Storage...'\n\
+php artisan storage:link\n\
+\n\
+echo '📦 Ejecutando migraciones...'\n\
 php artisan migrate --force\n\
 \n\
-echo '🌱 Actualizando usuario administrador (UsersSeeder)...'\n\
-php artisan db:seed --class=UsersSeeder --force\n\
+echo '🌱 Ejecutando seeders...'\n\
+php artisan db:seed --force\n\
 \n\
-echo '📝 Generando caché de producción para alta velocidad...'\n\
+echo '📝 Generando caché de configuración para el servidor...'\n\
 php artisan config:cache\n\
 php artisan route:cache\n\
 php artisan view:cache\n\
 \n\
-echo '🔥 Servidor SIGA Online en puerto 8000'\n\
+echo '🔥 Arrancando servidor...'\n\
 exec php artisan serve --host=0.0.0.0 --port=8000\n\
 " > /usr/local/bin/start-container
 
-# Hacer el script ejecutable
 RUN chmod +x /usr/local/bin/start-container
 
-# 10. Comando final para arrancar la aplicación
+# 10. Comando de inicio
 CMD ["/usr/local/bin/start-container"]
