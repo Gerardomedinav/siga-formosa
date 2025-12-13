@@ -55,8 +55,17 @@
                     </dl>
                 </div>
 
-                {{-- Botón de Acción --}}
-                <div class="mt-10 flex justify-end">
+                {{-- Botones de Acción --}}
+                <div class="mt-10 flex justify-end gap-4">
+                    {{-- BOTÓN AGREGADO: VOLVER A PANEL --}}
+                    <a href="{{ route('panel') }}" 
+                       class="bg-indigo-400 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow transition transform hover:scale-105 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Ir al Panel
+                    </a>
+
                     <a href="{{ route('perfil.edit') }}" 
                        id="btn-editar-perfil"
                        class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-full shadow transition transform hover:scale-105">
