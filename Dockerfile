@@ -30,7 +30,7 @@ RUN npm run build
 
 # 6. Configuración inicial (.env y key)
 RUN cp .env.example .env
-RUN php artisan key:generate
+
 
 # 7. Permisos
 RUN chown -R www-data:www-data /var/www/storage \
