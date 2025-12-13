@@ -1,4 +1,4 @@
-# --- Dockerfile Definitivo para Render ---
+# --- Dockerfile Optimizado para Render (Solución Credenciales) ---
 FROM php:8.3-fpm-alpine
 
 # 1. Instalar dependencias
@@ -28,9 +28,10 @@ RUN composer install --prefer-dist --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
-# 6. Configuración inicial (.env y key)
-RUN cp .env.example .env
-RUN php artisan key:generate
+# --- CAMBIO IMPORTANTE: SECCIÓN 6 ELIMINADA ---
+# No copiamos .env.example ni generamos key aquí.
+# Laravel leerá todo directamente desde las variables de Render.
+# ----------------------------------------------
 
 # 7. Permisos
 RUN chown -R www-data:www-data /var/www/storage \
@@ -40,7 +41,7 @@ RUN chown -R www-data:www-data /var/www/storage \
 EXPOSE 8000
 
 # -----------------------------------------------------------
-# 9. SCRIPT DE INICIO (Modificado para Storage Link y Optimize Clear)
+# 9. SCRIPT DE INICIO (Limpieza, Storage y Cacheo)
 # -----------------------------------------------------------
 RUN printf "#!/bin/sh\n\
 set -e\n\
